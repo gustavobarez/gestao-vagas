@@ -12,13 +12,13 @@ import br.com.gustavobarez.gestao_vagas.modules.company.dto.AuthCompanyDTO;
 import br.com.gustavobarez.gestao_vagas.modules.company.useCases.AuthCompanyUseCase;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/company")
 public class AuthCompanyController {
     
     @Autowired
     private AuthCompanyUseCase authCompanyUseCase;
 
-    @PostMapping("/company")
+    @PostMapping("/auth")
     public String create(@RequestBody AuthCompanyDTO authCompanyDTO) throws AuthenticationException {
         return this.authCompanyUseCase.execute(authCompanyDTO);
     }
