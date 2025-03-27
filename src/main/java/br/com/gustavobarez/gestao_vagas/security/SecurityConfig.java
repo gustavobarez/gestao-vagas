@@ -12,13 +12,19 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 @Configuration
 @EnableMethodSecurity
-public class SecurityConfig {
+public class SecurityConfig { 
 
     @Autowired
     private SecurityFilter securityFilter;
 
     @Autowired
     private SecurityCandidateFilter securityCandidateFilter;
+
+    private static final String[] SWAGGER_LIST = {
+        "/swagger-ui/**",
+        "/v3/api-docs/**",
+        "/swagger-resources/**"
+    };
 
     @Bean // obrigatorio estar dentro de uma classe @Configuration, e declara que esse metodo vai dar gerenciar algum objeto ja gerenciado pelo spring
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -27,7 +33,8 @@ public class SecurityConfig {
                 auth.requestMatchers("/candidate/").permitAll()
                     .requestMatchers("/company/").permitAll()
                     .requestMatchers("/company/auth").permitAll()
-                    .requestMatchers("/candidate/auth").permitAll();
+                    .requestMatchers("/candidate/auth").permitAll()
+                    .requestMatchers(SWAGGER_LIST).permitAll();
                 auth.anyRequest().authenticated();
             })
             .addFilterBefore(securityCandidateFilter, BasicAuthenticationFilter.class)
